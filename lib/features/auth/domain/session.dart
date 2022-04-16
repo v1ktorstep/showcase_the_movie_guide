@@ -4,7 +4,6 @@ part 'session.freezed.dart';
 
 part 'session.g.dart';
 
-@immutable
 @freezed
 class Session with _$Session {
   const factory Session(

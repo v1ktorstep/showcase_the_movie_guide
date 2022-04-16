@@ -4,7 +4,6 @@ part 'request_token.freezed.dart';
 
 part 'request_token.g.dart';
 
-@immutable
 @freezed
 class RequestToken with _$RequestToken {
   const factory RequestToken(
