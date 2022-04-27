@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:showcase_the_movie_guide/di/injectable.dart';
-import 'package:showcase_the_movie_guide/routes/app_router.dart';
+import 'package:showcase_the_movie_guide/core/di/injectable.dart';
+import 'package:showcase_the_movie_guide/core/routes/app_router.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
