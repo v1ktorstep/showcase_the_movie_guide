@@ -1,0 +1,9 @@
+{
+  "appTitle": "Showcase: The Movie Guide",
+  "mediaCategories": "{section, select, popularMovies {Popular Movies} topRatedMovies {Top Rated Movies} upcomingMovies {Upcoming Movies} other {Other}}",
+  "@mediaCategories": {
+    "placeholders": {
+      "section": {}
+    }
+  }
+}

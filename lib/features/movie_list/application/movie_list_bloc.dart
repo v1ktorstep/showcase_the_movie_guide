@@ -33,11 +33,11 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
         source: _movieRepository.loadPopular,
       ),
       Category(
-        key: 'topRated',
+        key: 'topRatedMovies',
         source: _movieRepository.loadTopRated,
       ),
       Category(
-        key: 'upcoming',
+        key: 'upcomingMovies',
         source: _movieRepository.loadUpcoming,
       ),
     ];

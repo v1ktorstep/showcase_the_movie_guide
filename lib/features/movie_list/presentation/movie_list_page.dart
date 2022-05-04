@@ -7,6 +7,7 @@ import 'package:showcase_the_movie_guide/features/movie_list/application/movie_l
 import 'package:showcase_the_movie_guide/features/movie_list/presentation/movie_item.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MovieListPage extends StatelessWidget {
   const MovieListPage({Key? key}) : super(key: key);
@@ -98,27 +99,40 @@ class _MovieCategoryState extends State<_MovieCategory> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
-      child: PagedListView<int, Movie>.separated(
-        pagingController: _pagingController,
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.all(16),
-        builderDelegate: PagedChildBuilderDelegate(
-          itemBuilder: (context, item, index) {
-            // TODO: Rework.
-            return MovieItem(
-              posterUrl: 'https://image.tmdb.org/t/p/w500/${item.posterPath}',
-              title: item.title,
-            );
-          },
+    final localizations = AppLocalizations.of(context)!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(localizations.mediaCategories(widget.category.key)),
         ),
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            width: 8,
-          );
-        },
-      ),
+        SizedBox(
+          height: 250,
+          child: PagedListView<int, Movie>.separated(
+            pagingController: _pagingController,
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            builderDelegate: PagedChildBuilderDelegate(
+              itemBuilder: (context, item, index) {
+                // TODO: Rework.
+                return MovieItem(
+                  posterUrl:
+                      'https://image.tmdb.org/t/p/w500/${item.posterPath}',
+                  title: item.title,
+                );
+              },
+            ),
+            separatorBuilder: (context, index) {
+              return const SizedBox(
+                width: 8,
+              );
+            },
+          ),
+        )
+      ],
     );
   }
 
