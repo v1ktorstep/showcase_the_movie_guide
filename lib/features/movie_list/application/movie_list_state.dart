@@ -10,5 +10,6 @@ class MovieListState with _$MovieListState {
 
   const factory MovieListState.loaded(
     List<Category<MediaPage<Movie>>> movieCategories,
+    List<Category<MediaPage<Tv>>> tvCategories,
   ) = Loaded;
 }

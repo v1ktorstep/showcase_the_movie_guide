@@ -43,6 +43,13 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
       ),
     ];
 
+    final tvCategories = <Category<MediaPage<Tv>>>[
+      Category(
+        key: 't',
+        source: _movieRepository.loadPopularTv,
+      ),
+    ];
+
     try {
       for (var i = 0; i < movieCategories.length; i++) {
         final category = movieCategories[i];
@@ -51,7 +58,7 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
         movieCategories[i] = category.copyWith(preloaded: preloaded);
       }
 
-      emit(MovieListState.loaded(movieCategories));
+      emit(MovieListState.loaded(movieCategories, tvCategories));
     } catch (e) {
       // TODO: Handle exceptions.
     }

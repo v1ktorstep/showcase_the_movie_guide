@@ -25,11 +25,33 @@ class MovieListPage extends StatelessWidget {
               initial: () => const _MovieListLoading(),
               loading: () => const _MovieListLoading(),
               error: () => const _MovieListError(),
-              loaded: (movieCategories) {
+              loaded: (movieCat, tvCat) {
                 return ListView.builder(
-                  itemCount: movieCategories.length,
+                  itemCount: movieCat.length + tvCat.length,
                   itemBuilder: (context, index) {
-                    return _MovieCategory(category: movieCategories[index]);
+                    if (index < movieCat.length) {
+                      return _MediaCategory<Movie>(
+                        category: movieCat[index],
+                        itemBuilder: (context, item, index) {
+                          return MovieItem(
+                            posterUrl:
+                                'https://image.tmdb.org/t/p/w500/${item.posterPath}',
+                            title: item.title,
+                          );
+                        },
+                      );
+                    } else {
+                      return _MediaCategory<Tv>(
+                        category: tvCat[index - movieCat.length],
+                        itemBuilder: (context, item, index) {
+                          return MovieItem(
+                            posterUrl:
+                                'https://image.tmdb.org/t/p/w500/${item.posterPath}',
+                            title: item.originalName,
+                          );
+                        },
+                      );
+                    }
                   },
                 );
               },
@@ -63,20 +85,22 @@ class _MovieListError extends StatelessWidget {
   }
 }
 
-class _MovieCategory extends StatefulWidget {
-  final Category<MediaPage<Movie>> category;
+class _MediaCategory<T extends Media> extends StatefulWidget {
+  final Category<MediaPage<T>> category;
+  final ItemWidgetBuilder<T> itemBuilder;
 
-  const _MovieCategory({
+  const _MediaCategory({
     Key? key,
     required this.category,
+    required this.itemBuilder,
   }) : super(key: key);
 
   @override
-  State<_MovieCategory> createState() => _MovieCategoryState();
+  State<_MediaCategory<T>> createState() => _MediaCategoryState();
 }
 
-class _MovieCategoryState extends State<_MovieCategory> {
-  final _pagingController = PagingController<int, Movie>(firstPageKey: 1);
+class _MediaCategoryState<T extends Media> extends State<_MediaCategory<T>> {
+  final _pagingController = PagingController<int, T>(firstPageKey: 1);
 
   @override
   void initState() {
@@ -111,19 +135,12 @@ class _MovieCategoryState extends State<_MovieCategory> {
         ),
         SizedBox(
           height: 250,
-          child: PagedListView<int, Movie>.separated(
+          child: PagedListView<int, T>.separated(
             pagingController: _pagingController,
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             builderDelegate: PagedChildBuilderDelegate(
-              itemBuilder: (context, item, index) {
-                // TODO: Rework.
-                return MovieItem(
-                  posterUrl:
-                      'https://image.tmdb.org/t/p/w500/${item.posterPath}',
-                  title: item.title,
-                );
-              },
+              itemBuilder: widget.itemBuilder,
             ),
             separatorBuilder: (context, index) {
               return const SizedBox(

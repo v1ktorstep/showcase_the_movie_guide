@@ -9,4 +9,12 @@ abstract class ITmdbRepository {
   Future<MediaPage<Movie>> loadTopRatedMovies({int page});
 
   Future<MediaPage<Movie>> loadUpcomingMovies({int page});
+
+  Future<MediaPage<Tv>> loadAiringTodayTv({int page});
+
+  Future<MediaPage<Tv>> loadOnTheAirTv({int page});
+
+  Future<MediaPage<Tv>> loadPopularTv({int page});
+
+  Future<MediaPage<Tv>> loadTopRatedTv({int page});
 }
