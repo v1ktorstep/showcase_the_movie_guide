@@ -1,11 +1,12 @@
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
 
-abstract class ITmdbMovieRepository {
-  Future<MoviePage> loadNowPlaying({int page});
+abstract class ITmdbRepository {
+  Future<MediaPage<Movie>> loadNowPlayingMovies({int page});
 
-  Future<MoviePage> loadPopular({int page});
+  Future<MediaPage<Movie>> loadPopularMovies({int page});
 
-  Future<MoviePage> loadTopRated({int page});
+  Future<MediaPage<Movie>> loadTopRatedMovies({int page});
 
-  Future<MoviePage> loadUpcoming({int page});
+  Future<MediaPage<Movie>> loadUpcomingMovies({int page});
 }

@@ -6,8 +6,8 @@ import 'package:showcase_the_movie_guide/features/movie_list/application/categor
 import 'package:showcase_the_movie_guide/features/movie_list/application/movie_list_bloc.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/presentation/movie_item.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
 
 class MovieListPage extends StatelessWidget {
   const MovieListPage({Key? key}) : super(key: key);
@@ -64,7 +64,7 @@ class _MovieListError extends StatelessWidget {
 }
 
 class _MovieCategory extends StatefulWidget {
-  final Category<MoviePage> category;
+  final Category<MediaPage<Movie>> category;
 
   const _MovieCategory({
     Key? key,
