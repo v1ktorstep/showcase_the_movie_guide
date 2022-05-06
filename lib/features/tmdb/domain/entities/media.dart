@@ -20,4 +20,20 @@ class Media with _$Media {
     required bool video,
     required double voteAverage,
   }) = Movie;
+
+  const factory Media.tv({
+    required String? posterPath,
+    required double popularity,
+    required int id,
+    required String? backdropPath,
+    required double voteAverage,
+    required String overview,
+    required String firstAirDate,
+    required List<String> originCountry,
+    required List<int> genreIds,
+    required String originalLanguage,
+    required int voteCount,
+    required String name,
+    required String originalName,
+  }) = Tv;
 }

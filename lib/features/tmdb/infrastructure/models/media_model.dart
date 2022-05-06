@@ -26,6 +26,22 @@ class MediaModel with _$MediaModel {
     @JsonKey(name: 'vote_average') double voteAverage,
   ) = MovieModel;
 
+  const factory MediaModel.tv(
+    @JsonKey(name: 'poster_path') String? posterPath,
+    @JsonKey(name: 'popularity') double popularity,
+    @JsonKey(name: 'id') int id,
+    @JsonKey(name: 'backdrop_path') String? backdropPath,
+    @JsonKey(name: 'vote_average') double voteAverage,
+    @JsonKey(name: 'overview') String overview,
+    @JsonKey(name: 'first_air_date') String firstAirDate,
+    @JsonKey(name: 'origin_country') List<String> originCountry,
+    @JsonKey(name: 'genre_ids') List<int> genreIds,
+    @JsonKey(name: 'original_language') String originalLanguage,
+    @JsonKey(name: 'vote_count') int voteCount,
+    @JsonKey(name: 'name') String name,
+    @JsonKey(name: 'original_name') String originalName,
+  ) = TvModel;
+
   factory MediaModel.fromJson(Map<String, dynamic> json) =>
       _$MediaModelFromJson(json);
 
@@ -47,6 +63,23 @@ class MediaModel with _$MediaModel {
           voteCount: model.voteCount,
           video: model.video,
           voteAverage: model.voteAverage,
+        );
+      },
+      tv: (model) {
+        return Tv(
+          posterPath: model.posterPath,
+          popularity: model.popularity,
+          id: model.id,
+          backdropPath: model.backdropPath,
+          voteAverage: model.voteAverage,
+          overview: model.overview,
+          firstAirDate: model.firstAirDate,
+          originCountry: model.originCountry,
+          genreIds: model.genreIds,
+          originalLanguage: model.originalLanguage,
+          voteCount: model.voteCount,
+          name: model.name,
+          originalName: model.originalName,
         );
       },
     );
