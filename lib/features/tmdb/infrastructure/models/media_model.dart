@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:showcase_the_movie_guide/core/constants.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 
 part 'media_model.freezed.dart';
@@ -49,7 +50,7 @@ class MediaModel with _$MediaModel {
     return map(
       movie: (model) {
         return Movie(
-          posterPath: model.posterPath,
+          posterPath: '${Constants.posterBaseUrl}${model.posterPath}',
           adult: model.adult,
           overview: model.overview,
           releaseDate: model.releaseDate,
@@ -67,7 +68,7 @@ class MediaModel with _$MediaModel {
       },
       tv: (model) {
         return Tv(
-          posterPath: model.posterPath,
+          posterPath: '${Constants.posterBaseUrl}${model.posterPath}',
           popularity: model.popularity,
           id: model.id,
           backdropPath: model.backdropPath,

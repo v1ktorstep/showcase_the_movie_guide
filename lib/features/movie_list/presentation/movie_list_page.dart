@@ -34,8 +34,7 @@ class MovieListPage extends StatelessWidget {
                         category: movieCat[index],
                         itemBuilder: (context, item, index) {
                           return MovieItem(
-                            posterUrl:
-                                'https://image.tmdb.org/t/p/w500/${item.posterPath}',
+                            posterUrl: item.posterPath ?? '',
                             title: item.title,
                           );
                         },
@@ -45,8 +44,7 @@ class MovieListPage extends StatelessWidget {
                         category: tvCat[index - movieCat.length],
                         itemBuilder: (context, item, index) {
                           return MovieItem(
-                            posterUrl:
-                                'https://image.tmdb.org/t/p/w500/${item.posterPath}',
+                            posterUrl: item.posterPath ?? '',
                             title: item.originalName,
                           );
                         },
