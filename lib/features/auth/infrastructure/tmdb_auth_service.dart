@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
-import 'package:showcase_the_movie_guide/core/consts.dart';
+import 'package:showcase_the_movie_guide/core/constants.dart';
 import 'package:showcase_the_movie_guide/features/auth/domain/request_token.dart';
 import 'package:showcase_the_movie_guide/features/auth/domain/session.dart';
 
 part 'tmdb_auth_service.g.dart';
 
 @LazySingleton()
-@RestApi(baseUrl: '${Consts.tmdbApiUrl}/3/authentication/')
+@RestApi(baseUrl: '${Constants.tmdbApiUrl}/3/authentication/')
 abstract class TmdbAuthService {
   @factoryMethod
   factory TmdbAuthService(Dio dio) = _TmdbAuthService;

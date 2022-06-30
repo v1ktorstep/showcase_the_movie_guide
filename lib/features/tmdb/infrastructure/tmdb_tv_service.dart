@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
-import 'package:showcase_the_movie_guide/core/consts.dart';
+import 'package:showcase_the_movie_guide/core/constants.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/models/tv_page_model.dart';
 
 part 'tmdb_tv_service.g.dart';
 
 @LazySingleton()
-@RestApi(baseUrl: '${Consts.tmdbApiUrl}/3/tv/')
+@RestApi(baseUrl: '${Constants.tmdbApiUrl}/3/tv/')
 abstract class TmdbTvService {
   @factoryMethod
   factory TmdbTvService(Dio dio) = _TmdbTvService;
