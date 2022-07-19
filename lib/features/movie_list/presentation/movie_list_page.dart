@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:showcase_the_movie_guide/core/di/injectable.dart';
+import 'package:showcase_the_movie_guide/core/routes/app_router.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/application/category.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/application/movie_list_bloc.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/presentation/movie_item.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
+import 'package:auto_route/auto_route.dart';
 
 class MovieListPage extends StatelessWidget {
   const MovieListPage({Key? key}) : super(key: key);
@@ -33,9 +35,15 @@ class MovieListPage extends StatelessWidget {
                       return _MediaCategory<Movie>(
                         category: movieCat[index],
                         itemBuilder: (context, item, index) {
-                          return MovieItem(
-                            posterUrl: item.posterPath ?? '',
-                            title: item.title,
+                          return GestureDetector(
+                            onTap: () {
+                              context.router
+                                  .push(MovieDetailsRoute(movie: item));
+                            },
+                            child: MovieItem(
+                              posterUrl: item.posterPath ?? '',
+                              title: item.title,
+                            ),
                           );
                         },
                       );

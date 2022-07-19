@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
 import 'package:showcase_the_movie_guide/core/constants.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/models/movie_details_model.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/models/movie_page_model.dart';
 
 part 'tmdb_movie_service.g.dart';
@@ -23,4 +25,7 @@ abstract class TmdbMovieService {
 
   @GET('/upcoming')
   Future<MoviePageModel> getUpcoming({@Query('page') int page = 0});
+
+  @GET('/{id}')
+  Future<MovieDetailsModel> getMovieDetails(@Path() String id);
 }

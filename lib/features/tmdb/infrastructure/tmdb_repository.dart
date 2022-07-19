@@ -1,9 +1,10 @@
 import 'package:injectable/injectable.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_details.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/i_tmdb_repository.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/tmdb_movie_service.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/tmdb_tv_service.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/tmdb_movie_service.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/tmdb_tv_service.dart';
 
 @LazySingleton(as: ITmdbRepository)
 class TmdbRepository implements ITmdbRepository {
@@ -60,5 +61,10 @@ class TmdbRepository implements ITmdbRepository {
   @override
   Future<MediaPage<Tv>> loadTopRatedTv({int page = 0}) {
     return _tvService.getTopRated(page: page).then((value) => value.toDomain());
+  }
+
+  @override
+  Future<MovieDetails> loadMovieDetails(String id) {
+    return _movieService.getMovieDetails(id).then((value) => value.toDomain());
   }
 }
