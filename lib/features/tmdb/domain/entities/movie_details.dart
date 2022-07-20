@@ -1,4 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/genre.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/prod_company.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/prod_country.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/spoken_lang.dart';
 
 part 'movie_details.freezed.dart';
 
@@ -31,38 +35,4 @@ class MovieDetails with _$MovieDetails {
     required double voteAverage,
     required int voteCount,
   }) = _MovieDetails;
-}
-
-@freezed
-class Genre with _$Genre {
-  const factory Genre({
-    required int id,
-    required String name,
-  }) = _Genre;
-}
-
-@freezed
-class ProdCompany with _$ProdCompany {
-  const factory ProdCompany({
-    required int id,
-    required String? logoPath,
-    required String name,
-    required String originCountry,
-  }) = _ProdCompany;
-}
-
-@freezed
-class ProdCountry with _$ProdCountry {
-  const factory ProdCountry({
-    required String iso_3166_1,
-    required String name,
-  }) = _ProdCountry;
-}
-
-@freezed
-class SpokenLang with _$SpokenLang {
-  const factory SpokenLang({
-    required String iso_639_1,
-    required String name,
-  }) = _SpokenLang;
 }
