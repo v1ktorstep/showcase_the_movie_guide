@@ -51,9 +51,14 @@ class MovieListPage extends StatelessWidget {
                       return _MediaCategory<Tv>(
                         category: tvCat[index - movieCat.length],
                         itemBuilder: (context, item, index) {
-                          return MovieItem(
-                            posterUrl: item.posterPath ?? '',
-                            title: item.originalName,
+                          return GestureDetector(
+                            onTap: () {
+                              context.router.push(TvDetailsRoute(tv: item));
+                            },
+                            child: MovieItem(
+                              posterUrl: item.posterPath ?? '',
+                              title: item.originalName,
+                            ),
                           );
                         },
                       );

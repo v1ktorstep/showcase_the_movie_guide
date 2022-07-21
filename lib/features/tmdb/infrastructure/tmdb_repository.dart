@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_details.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/tv_details.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/i_tmdb_repository.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/tmdb_movie_service.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/tmdb_tv_service.dart';
@@ -66,5 +67,10 @@ class TmdbRepository implements ITmdbRepository {
   @override
   Future<MovieDetails> loadMovieDetails(String id) {
     return _movieService.getMovieDetails(id).then((value) => value.toDomain());
+  }
+
+  @override
+  Future<TvDetails> loadTvDetails(String id) {
+    return _tvService.getTvDetails(id).then((value) => value.toDomain());
   }
 }
