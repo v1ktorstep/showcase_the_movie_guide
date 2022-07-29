@@ -1,23 +1,36 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:showcase_the_movie_guide/features/auth/infrastructure/tmdb_api_interceptor.dart';
+import 'package:showcase_the_movie_guide/features/auth/infrastructure/tmdb_auth_interceptor.dart';
+
+const kDioAuth = 'dioAuth';
 
 @module
 abstract class DioModule {
-  final _apiKey = '35a52d3a97729104ddb4cb658b98c254';
-
   @LazySingleton()
-  Dio getDio() {
+  Dio getDio(TmdbApiInterceptor apiInterceptor) {
     final dio = Dio();
 
     dio.interceptors.addAll([
       LogInterceptor(responseBody: true),
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          // TODO: Rework.
-          options.queryParameters['api_key'] = _apiKey;
-          return handler.next(options);
-        },
-      )
+      apiInterceptor,
+    ]);
+
+    return dio;
+  }
+
+  @Named(kDioAuth)
+  @LazySingleton()
+  Dio getDioAuth(
+    TmdbApiInterceptor apiInterceptor,
+    TmdbAuthInterceptor authInterceptor,
+  ) {
+    final dio = Dio();
+
+    dio.interceptors.addAll([
+      LogInterceptor(responseBody: true),
+      apiInterceptor,
+      authInterceptor,
     ]);
 
     return dio;
