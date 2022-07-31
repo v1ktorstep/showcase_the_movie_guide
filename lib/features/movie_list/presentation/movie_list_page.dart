@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:showcase_the_movie_guide/core/di/injectable.dart';
-import 'package:showcase_the_movie_guide/core/routes/app_router.dart';
-import 'package:showcase_the_movie_guide/features/movie_list/application/category.dart';
+import 'package:showcase_the_movie_guide/features/movie_list/application/item_source.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/application/movie_list_bloc.dart';
-import 'package:showcase_the_movie_guide/features/movie_list/presentation/movie_item.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:showcase_the_movie_guide/features/movie_list/presentation/movie_category.dart';
+import 'package:showcase_the_movie_guide/features/movie_list/presentation/tv_category.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/tv_page.dart';
 
 class MovieListPage extends StatelessWidget {
   const MovieListPage({Key? key}) : super(key: key);
@@ -20,50 +17,20 @@ class MovieListPage extends StatelessWidget {
       create: (context) {
         return getIt<MovieListBloc>()..add(const MovieListEvent.load());
       },
-      child: Material(
-        child: BlocBuilder<MovieListBloc, MovieListState>(
+      child: Scaffold(
+        body: BlocBuilder<MovieListBloc, MovieListState>(
           builder: (context, state) {
             return state.when(
               initial: () => const _MovieListLoading(),
               loading: () => const _MovieListLoading(),
               error: () => const _MovieListError(),
-              loaded: (movieCat, tvCat) {
-                return ListView.builder(
-                  itemCount: movieCat.length + tvCat.length,
-                  itemBuilder: (context, index) {
-                    if (index < movieCat.length) {
-                      return _MediaCategory<Movie>(
-                        category: movieCat[index],
-                        itemBuilder: (context, item, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              context.router
-                                  .push(MovieDetailsRoute(movie: item));
-                            },
-                            child: MovieItem(
-                              posterUrl: item.posterPath ?? '',
-                              title: item.title,
-                            ),
-                          );
-                        },
-                      );
-                    } else {
-                      return _MediaCategory<Tv>(
-                        category: tvCat[index - movieCat.length],
-                        itemBuilder: (context, item, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              context.router.push(TvDetailsRoute(tv: item));
-                            },
-                            child: MovieItem(
-                              posterUrl: item.posterPath ?? '',
-                              title: item.originalName,
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
+              loaded: (
+                movieCategories,
+                tvCategories,
+              ) {
+                return _MovieList(
+                  movieCategories: movieCategories,
+                  tvCategories: tvCategories,
                 );
               },
             );
@@ -96,86 +63,29 @@ class _MovieListError extends StatelessWidget {
   }
 }
 
-class _MediaCategory<T extends Media> extends StatefulWidget {
-  final Category<MediaPage<T>> category;
-  final ItemWidgetBuilder<T> itemBuilder;
+class _MovieList extends StatelessWidget {
+  final List<ItemSource<MoviePage>> movieCategories;
+  final List<ItemSource<TvPage>> tvCategories;
 
-  const _MediaCategory({
+  const _MovieList({
     Key? key,
-    required this.category,
-    required this.itemBuilder,
+    required this.movieCategories,
+    required this.tvCategories,
   }) : super(key: key);
 
   @override
-  State<_MediaCategory<T>> createState() => _MediaCategoryState();
-}
-
-class _MediaCategoryState<T extends Media> extends State<_MediaCategory<T>> {
-  final _pagingController = PagingController<int, T>(firstPageKey: 1);
-
-  @override
-  void initState() {
-    super.initState();
-
-    final preloadedItems = widget.category.preloaded?.results;
-
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
-    });
-    _pagingController.itemList = preloadedItems;
-    _pagingController.nextPageKey = preloadedItems == null ? 1 : 2;
-  }
-
-  @override
-  void dispose() {
-    _pagingController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Text(localizations.mediaCategories(widget.category.key)),
-        ),
-        SizedBox(
-          height: 250,
-          child: PagedListView<int, T>.separated(
-            pagingController: _pagingController,
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            builderDelegate: PagedChildBuilderDelegate(
-              itemBuilder: widget.itemBuilder,
-            ),
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                width: 8,
-              );
-            },
-          ),
-        )
-      ],
+    return ListView.builder(
+      itemCount: movieCategories.length + tvCategories.length,
+      itemBuilder: (context, index) {
+        if (index < movieCategories.length) {
+          return MovieCategory(itemSource: movieCategories[index]);
+        } else {
+          return TvCategory(
+            itemSource: tvCategories[index - movieCategories.length],
+          );
+        }
+      },
     );
-  }
-
-  void _fetchPage(int pageKey) async {
-    try {
-      final page = await widget.category.source(page: pageKey);
-
-      if (page.page < page.totalResults) {
-        _pagingController.appendPage(page.results, pageKey + 1);
-      } else {
-        _pagingController.appendLastPage(page.results);
-      }
-    } catch (e) {
-      // TODO: Rework.
-      _pagingController.error = e;
-    }
   }
 }

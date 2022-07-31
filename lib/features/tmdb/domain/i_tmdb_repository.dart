@@ -1,24 +1,24 @@
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_details.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/tv_details.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/tv_page.dart';
 
 abstract class ITmdbRepository {
-  Future<MediaPage<Movie>> loadNowPlayingMovies({int page});
+  Future<MoviePage> loadNowPlayingMovies({int page});
 
-  Future<MediaPage<Movie>> loadPopularMovies({int page});
+  Future<MoviePage> loadPopularMovies({int page});
 
-  Future<MediaPage<Movie>> loadTopRatedMovies({int page});
+  Future<MoviePage> loadTopRatedMovies({int page});
 
-  Future<MediaPage<Movie>> loadUpcomingMovies({int page});
+  Future<MoviePage> loadUpcomingMovies({int page});
 
-  Future<MediaPage<Tv>> loadAiringTodayTv({int page});
+  Future<TvPage> loadAiringTodayTv({int page});
 
-  Future<MediaPage<Tv>> loadOnTheAirTv({int page});
+  Future<TvPage> loadOnTheAirTv({int page});
 
-  Future<MediaPage<Tv>> loadPopularTv({int page});
+  Future<TvPage> loadPopularTv({int page});
 
-  Future<MediaPage<Tv>> loadTopRatedTv({int page});
+  Future<TvPage> loadTopRatedTv({int page});
 
   Future<MovieDetails> loadMovieDetails(String id);
 

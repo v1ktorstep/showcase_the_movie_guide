@@ -9,7 +9,7 @@ class MovieListState with _$MovieListState {
   const factory MovieListState.error() = Error;
 
   const factory MovieListState.loaded(
-    List<Category<MediaPage<Movie>>> movieCategories,
-    List<Category<MediaPage<Tv>>> tvCategories,
+    List<ItemSource<MoviePage>> movieCategories,
+    List<ItemSource<TvPage>> tvCategories,
   ) = Loaded;
 }

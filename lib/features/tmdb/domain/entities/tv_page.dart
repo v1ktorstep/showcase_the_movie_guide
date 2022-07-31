@@ -1,14 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 
-part 'media_page.freezed.dart';
+part 'tv_page.freezed.dart';
 
 @freezed
-class MediaPage<T extends Media> with _$MediaPage<T> {
-  const factory MediaPage({
+class TvPage with _$TvPage {
+  const factory TvPage({
     required int page,
-    required List<T> results,
+    required List<Tv> results,
     required int totalResults,
     required int totalPages,
-  }) = _MediaPage<T>;
+  }) = _TvPage;
 }

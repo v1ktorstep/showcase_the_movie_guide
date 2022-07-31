@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:showcase_the_movie_guide/features/movie_list/application/category.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/tv_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/i_tmdb_repository.dart';
+import 'package:showcase_the_movie_guide/features/movie_list/application/item_source.dart';
 
 part 'movie_list_event.dart';
 
@@ -28,23 +28,23 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
   FutureOr<void> _load(Load event, Emitter<MovieListState> emit) async {
     emit(const MovieListState.loading());
 
-    final movieCategories = <Category<MediaPage<Movie>>>[
-      Category(
+    final movieCategories = <ItemSource<MoviePage>>[
+      ItemSource(
         key: 'popularMovies',
         source: _movieRepository.loadPopularMovies,
       ),
-      Category(
+      ItemSource(
         key: 'topRatedMovies',
         source: _movieRepository.loadTopRatedMovies,
       ),
-      Category(
+      ItemSource(
         key: 'upcomingMovies',
         source: _movieRepository.loadUpcomingMovies,
       ),
     ];
 
-    final tvCategories = <Category<MediaPage<Tv>>>[
-      Category(
+    final tvCategories = <ItemSource<TvPage>>[
+      ItemSource(
         key: 't',
         source: _movieRepository.loadPopularTv,
       ),

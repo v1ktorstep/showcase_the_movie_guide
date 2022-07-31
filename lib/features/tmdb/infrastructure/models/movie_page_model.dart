@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:showcase_the_movie_guide/core/extensions/list_extension.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media_page.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/models/media_model.dart';
 
 part 'movie_page_model.freezed.dart';
@@ -22,8 +22,8 @@ class MoviePageModel with _$MoviePageModel {
   factory MoviePageModel.fromJson(Map<String, dynamic> json) =>
       _$MoviePageModelFromJson(json);
 
-  MediaPage<Movie> toDomain() {
-    return MediaPage<Movie>(
+  MoviePage toDomain() {
+    return MoviePage(
       page: page,
       results: results.mapAsList((e) => e.toDomain()).cast<Movie>(),
       totalResults: totalResults,
