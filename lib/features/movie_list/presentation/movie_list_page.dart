@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:showcase_the_movie_guide/core/di/injectable.dart';
 import 'package:showcase_the_movie_guide/core/routes/app_router.dart';
+import 'package:showcase_the_movie_guide/features/app/application/app_login/app_login_cubit.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/application/item_source.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/application/movie_list_bloc.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/presentation/movie_category.dart';
@@ -21,13 +23,8 @@ class MovieListPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                context.router.push(const SignInRoute());
-              },
-              icon: const Icon(Icons.account_circle_rounded),
-            )
+          actions: const [
+            _AccountIconButton(),
           ],
         ),
         body: BlocBuilder<MovieListBloc, MovieListState>(
@@ -95,6 +92,40 @@ class _MovieList extends StatelessWidget {
         } else {
           return TvCategory(
             itemSource: tvCategories[index - movieCategories.length],
+          );
+        }
+      },
+    );
+  }
+}
+
+class _AccountIconButton extends StatelessWidget {
+  const _AccountIconButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AppLoginCubit, AppLoginState>(
+      builder: (context, state) {
+        if (state.loggedIn) {
+          final accountDetails = state.accountDetails;
+
+          final icon = accountDetails == null
+              ? const Icon(Icons.account_circle_rounded)
+              : CachedNetworkImage(
+                  imageUrl:
+                      'https://www.gravatar.com/avatar/${accountDetails.avatar.gravatar.hash}',
+                );
+
+          return IconButton(
+            onPressed: () {},
+            icon: icon,
+          );
+        } else {
+          return IconButton(
+            onPressed: () {
+              context.router.push(const SignInRoute());
+            },
+            icon: const Icon(Icons.account_circle_rounded),
           );
         }
       },

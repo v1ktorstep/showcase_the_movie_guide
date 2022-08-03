@@ -8,11 +8,11 @@ import 'package:showcase_the_movie_guide/features/account/domain/entities/accoun
 part 'account_service.g.dart';
 
 @LazySingleton()
-@RestApi(baseUrl: '${Constants.tmdbApiUrl}/account/')
+@RestApi(baseUrl: '${Constants.tmdbApiUrl}/3/')
 abstract class AccountService {
   @factoryMethod
   factory AccountService(@Named(kDioAuth) Dio dio) = _AccountService;
 
-  @GET('/')
+  @GET('/account')
   Future<AccountDetails> accountDetails();
 }

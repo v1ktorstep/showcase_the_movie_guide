@@ -4,7 +4,7 @@ import 'package:showcase_the_movie_guide/core/di/injectable.dart';
 import 'package:showcase_the_movie_guide/core/routes/app_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:showcase_the_movie_guide/features/app/application/app/app_bloc.dart';
-
+import 'package:showcase_the_movie_guide/features/app/application/app_login/app_login_cubit.dart';
 class ShowcaseApp extends StatelessWidget {
   ShowcaseApp({Key? key}) : super(key: key);
 
@@ -15,6 +15,7 @@ class ShowcaseApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<AppBloc>()),
+        BlocProvider(create: (context) => getIt<AppLoginCubit>()),
       ],
       child: MaterialApp.router(
         theme: ThemeData(
