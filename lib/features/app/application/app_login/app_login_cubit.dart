@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -14,11 +16,20 @@ class AppLoginCubit extends Cubit<AppLoginState> {
   final TmdbAuth _tmdbAuth;
   final IAccountRepository _accountRepository;
 
+  StreamSubscription? _subscription;
+
   AppLoginCubit(
     this._tmdbAuth,
     this._accountRepository,
   ) : super(const AppLoginState(loggedIn: false, accountDetails: null)) {
-    _tmdbAuth.watchSignIn().listen(_onSignIn);
+    _subscription =
+        _tmdbAuth.watchSignIn(triggerImmediately: true).listen(_onSignIn);
+  }
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 
   void _onSignIn(isSignedIn) async {

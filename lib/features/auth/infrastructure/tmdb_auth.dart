@@ -15,7 +15,7 @@ class TmdbAuth {
   final _authorizationUrl = 'https://www.themoviedb.org/authenticate/';
   final _redirectionUrl = 'https://localhost:3000/callback';
 
-  final _controller = StreamController<bool>();
+  final _controller = StreamController<bool>.broadcast();
 
   Future<String?> getSessionId() async {
     return _storage.read();
@@ -23,7 +23,13 @@ class TmdbAuth {
 
   Future<bool> isSignedIn() => getSessionId().then((value) => value != null);
 
-  Stream<bool> watchSignIn() => _controller.stream;
+  Stream<bool> watchSignIn({bool triggerImmediately = false}) {
+    if (triggerImmediately) {
+      isSignedIn().then(_controller.add);
+    }
+
+    return _controller.stream;
+  }
 
   Future<RequestToken> createRequestToken() {
     return _authService.createRequestToken();
