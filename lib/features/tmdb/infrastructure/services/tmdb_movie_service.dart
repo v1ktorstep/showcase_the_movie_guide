@@ -27,5 +27,5 @@ abstract class TmdbMovieService {
   Future<MoviePageModel> getUpcoming({@Query('page') int page = 0});
 
   @GET('/{id}')
-  Future<MovieDetailsModel> getMovieDetails(@Path() String id);
+  Future<MovieDetailsModel> getMovieDetails(@Path() int id);
 }

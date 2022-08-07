@@ -26,5 +26,5 @@ abstract class TmdbTvService {
   Future<TvPageModel> getTopRated({@Query('page') int page = 0});
 
   @GET('/{id}')
-  Future<TvDetailsModel> getTvDetails(@Path() String id);
+  Future<TvDetailsModel> getTvDetails(@Path() int id);
 }

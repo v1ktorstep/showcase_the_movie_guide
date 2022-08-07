@@ -64,7 +64,7 @@ class _TvCategoryState extends State<TvCategory> {
               itemBuilder: (context, item, index) {
                 return GestureDetector(
                   onTap: () {
-                    context.router.push(TvDetailsRoute(tv: item));
+                    context.router.push(MovieDetailsRoute(media: item));
                   },
                   child: MovieItem(
                     posterUrl: item.posterPath ?? '',

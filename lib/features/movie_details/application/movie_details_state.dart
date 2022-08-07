@@ -4,5 +4,11 @@ part of 'movie_details_bloc.dart';
 class MovieDetailsState with _$MovieDetailsState {
   const factory MovieDetailsState.initial() = Initial;
 
-  const factory MovieDetailsState.loaded(MovieDetails details) = Loaded;
+  const factory MovieDetailsState.movieDetailsLoaded(
+    MovieDetails details,
+  ) = MovieDetailsLoaded;
+
+  const factory MovieDetailsState.tvDetailsLoaded(
+    TvDetails details,
+  ) = TvDetailsLoaded;
 }

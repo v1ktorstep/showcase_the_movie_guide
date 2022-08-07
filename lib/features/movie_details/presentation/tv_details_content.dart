@@ -1,36 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:showcase_the_movie_guide/core/di/injectable.dart';
+import 'package:showcase_the_movie_guide/features/movie_details/application/movie_details_bloc.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
-import 'package:showcase_the_movie_guide/features/tv_details/application/tv_details_bloc.dart';
 
-class TvDetailsPage extends StatelessWidget {
+class TvDetailsContent extends StatelessWidget {
   final Tv tv;
 
-  const TvDetailsPage({
-    Key? key,
-    required this.tv,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        return getIt<TvDetailsBloc>()
-          ..add(TvDetailsEvent.loadDetails(tv.id.toString()));
-      },
-      child: Scaffold(
-        body: _TvDetails(tv: tv),
-      ),
-    );
-  }
-}
-
-class _TvDetails extends StatelessWidget {
-  final Tv tv;
-
-  const _TvDetails({
+  const TvDetailsContent({
     Key? key,
     required this.tv,
   }) : super(key: key);
@@ -54,10 +31,10 @@ class _TvDetails extends StatelessWidget {
             style: theme.textTheme.headlineSmall,
           ),
         ),
-        BlocBuilder<TvDetailsBloc, TvDetailsState>(
+        BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
           builder: (context, state) {
             return state.maybeWhen(
-              loaded: (details) {
+              tvDetailsLoaded: (details) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(

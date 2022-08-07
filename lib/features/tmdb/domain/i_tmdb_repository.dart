@@ -20,7 +20,7 @@ abstract class ITmdbRepository {
 
   Future<TvPage> loadTopRatedTv({int page});
 
-  Future<MovieDetails> loadMovieDetails(String id);
+  Future<MovieDetails> loadMovieDetails(int id);
 
-  Future<TvDetails> loadTvDetails(String id);
+  Future<TvDetails> loadTvDetails(int id);
 }

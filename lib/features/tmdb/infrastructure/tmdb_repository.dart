@@ -66,12 +66,12 @@ class TmdbRepository implements ITmdbRepository {
   }
 
   @override
-  Future<MovieDetails> loadMovieDetails(String id) {
+  Future<MovieDetails> loadMovieDetails(int id) {
     return _movieService.getMovieDetails(id).then((value) => value.toDomain());
   }
 
   @override
-  Future<TvDetails> loadTvDetails(String id) {
+  Future<TvDetails> loadTvDetails(int id) {
     return _tvService.getTvDetails(id).then((value) => value.toDomain());
   }
 }

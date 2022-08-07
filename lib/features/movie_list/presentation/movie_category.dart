@@ -64,7 +64,7 @@ class _MovieCategoryState extends State<MovieCategory> {
               itemBuilder: (context, item, index) {
                 return GestureDetector(
                   onTap: () {
-                    context.router.push(MovieDetailsRoute(movie: item));
+                    context.router.push(MovieDetailsRoute(media: item));
                   },
                   child: MovieItem(
                     posterUrl: item.posterPath ?? '',
