@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:showcase_the_movie_guide/core/constants.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/models/known_for_model.dart';
+import 'package:showcase_the_movie_guide/core/extensions/list_extension.dart';
 
 part 'media_model.freezed.dart';
 
@@ -43,6 +45,16 @@ class MediaModel with _$MediaModel {
     @JsonKey(name: 'original_name') String originalName,
   ) = TvModel;
 
+  const factory MediaModel.person(
+    @JsonKey(name: 'profile_path') String? profilePath,
+    @JsonKey(name: 'adult') bool adult,
+    @JsonKey(name: 'id') int id,
+    @JsonKey(name: 'media_type') String mediaType,
+    @JsonKey(name: 'known_for') List<KnownForModel> knownFor,
+    @JsonKey(name: 'name') String name,
+    @JsonKey(name: 'popularity') double popularity,
+  ) = PersonModel;
+
   factory MediaModel.fromJson(Map<String, dynamic> json) =>
       _$MediaModelFromJson(json);
 
@@ -81,6 +93,17 @@ class MediaModel with _$MediaModel {
           voteCount: model.voteCount,
           name: model.name,
           originalName: model.originalName,
+        );
+      },
+      person: (model) {
+        return Person(
+          profilePath: model.profilePath,
+          adult: model.adult,
+          id: model.id,
+          mediaType: model.mediaType,
+          knownFor: model.knownFor.mapAsList((e) => e.toDomain()),
+          name: model.name,
+          popularity: model.popularity,
         );
       },
     );

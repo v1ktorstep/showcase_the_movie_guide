@@ -22,9 +22,10 @@ class MovieDetailsPage extends StatelessWidget {
           ..add(MovieDetailsEvent.loadDetails(media));
       },
       child: Scaffold(
-        body: media.map(
+        body: media.maybeMap(
           movie: (movie) => MovieDetailsContent(movie: movie),
           tv: (tv) => TvDetailsContent(tv: tv),
+          orElse: () => Container(),
         ),
       ),
     );

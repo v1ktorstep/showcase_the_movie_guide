@@ -34,12 +34,14 @@ class AccountRepository implements IAccountRepository {
 
   @override
   Future<void> markAsFavorite(Media media, bool favorite) async {
+    final mediaType = media.maybeMap(
+      movie: (_) => 'movie',
+      tv: (_) => 'tv',
+      orElse: () => throw Exception(),
+    );
+
     await _accountService.favorite(
-      media: FavoriteMedia(
-        media.map(movie: (_) => 'movie', tv: (_) => 'tv'),
-        media.id,
-        favorite,
-      ),
+      media: FavoriteMedia(mediaType, media.id, favorite),
     );
   }
 }

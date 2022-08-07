@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/known_for.dart';
 
 part 'media.freezed.dart';
 
@@ -36,4 +37,14 @@ class Media with _$Media {
     required String name,
     required String originalName,
   }) = Tv;
+
+  const factory Media.person({
+    required String? profilePath,
+    required bool adult,
+    required int id,
+    required String mediaType,
+    required List<KnownFor> knownFor,
+    required String name,
+    required double popularity,
+  }) = Person;
 }
