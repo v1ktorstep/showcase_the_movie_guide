@@ -1,10 +1,11 @@
 import 'package:injectable/injectable.dart';
-import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_details.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/search_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/tv_details.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/tv_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/i_tmdb_repository.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/search_service.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/tmdb_movie_service.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/tmdb_tv_service.dart';
 
@@ -12,8 +13,13 @@ import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/services/t
 class TmdbRepository implements ITmdbRepository {
   final TmdbMovieService _movieService;
   final TmdbTvService _tvService;
+  final SearchService _searchService;
 
-  TmdbRepository(this._movieService, this._tvService);
+  TmdbRepository(
+    this._movieService,
+    this._tvService,
+    this._searchService,
+  );
 
   @override
   Future<MoviePage> loadNowPlayingMovies({int page = 0}) {
@@ -73,5 +79,12 @@ class TmdbRepository implements ITmdbRepository {
   @override
   Future<TvDetails> loadTvDetails(int id) {
     return _tvService.getTvDetails(id).then((value) => value.toDomain());
+  }
+
+  @override
+  Future<SearchPage> search(String query, {int page = 1}) {
+    return _searchService
+        .multiSearch(query: query, page: page)
+        .then((value) => value.toDomain());
   }
 }
