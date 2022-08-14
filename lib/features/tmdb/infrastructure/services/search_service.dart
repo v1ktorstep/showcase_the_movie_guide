@@ -7,7 +7,7 @@ import 'package:showcase_the_movie_guide/features/tmdb/infrastructure/models/sea
 part 'search_service.g.dart';
 
 @LazySingleton()
-@RestApi(baseUrl: '${Constants.tmdbApiUrl}/v3/search')
+@RestApi(baseUrl: '${Constants.tmdbApiUrl}/3/search')
 abstract class SearchService {
   @factoryMethod
   factory SearchService(Dio dio) = _SearchService;

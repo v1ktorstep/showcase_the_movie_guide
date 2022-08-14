@@ -42,7 +42,6 @@ class Media with _$Media {
     required String? profilePath,
     required bool adult,
     required int id,
-    required String mediaType,
     required List<KnownFor> knownFor,
     required String name,
     required double popularity,

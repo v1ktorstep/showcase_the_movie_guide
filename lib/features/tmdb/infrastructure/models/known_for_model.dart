@@ -5,48 +5,81 @@ part 'known_for_model.freezed.dart';
 
 part 'known_for_model.g.dart';
 
-@freezed
+@Freezed(unionKey: 'media_type')
 class KnownForModel with _$KnownForModel {
   const KnownForModel._();
 
-  const factory KnownForModel(
-    @JsonKey(name: 'poster_path') String? posterPath,
-    @JsonKey(name: 'adult') bool adult,
-    @JsonKey(name: 'overview') String overview,
-    @JsonKey(name: 'release_date') String releaseDate,
-    @JsonKey(name: 'original_title') String originalTitle,
+  @FreezedUnionValue('tv')
+  const factory KnownForModel.knownForTvModel(
+    @JsonKey(name: 'backdrop_path') String? backdropPath,
+    @JsonKey(name: 'first_air_date') String firstAirDate,
     @JsonKey(name: 'genre_ids') List<int> genreIds,
     @JsonKey(name: 'id') int id,
-    @JsonKey(name: 'media_type') String mediaType,
+    @JsonKey(name: 'name') String name,
+    @JsonKey(name: 'origin_country') List<String> originCountry,
     @JsonKey(name: 'original_language') String originalLanguage,
-    @JsonKey(name: 'title') String title,
-    @JsonKey(name: 'backdrop_path') String? backdropPath,
-    @JsonKey(name: 'popularity') double popularity,
+    @JsonKey(name: 'original_name') String originalName,
+    @JsonKey(name: 'overview') String overview,
+    @JsonKey(name: 'poster_path') String? posterPath,
+    @JsonKey(name: 'vote_average') double voteAverage,
     @JsonKey(name: 'vote_count') int voteCount,
+  ) = KnownForTvModel;
+
+  @FreezedUnionValue('movie')
+  const factory KnownForModel.knownForMovieModel(
+    @JsonKey(name: 'adult') bool adult,
+    @JsonKey(name: 'backdrop_path') String? backdropPath,
+    @JsonKey(name: 'genre_ids') List<int> genreIds,
+    @JsonKey(name: 'id') int id,
+    @JsonKey(name: 'original_language') String originalLanguage,
+    @JsonKey(name: 'original_title') String originalTitle,
+    @JsonKey(name: 'overview') String overview,
+    @JsonKey(name: 'poster_path') String? posterPath,
+    @JsonKey(name: 'release_date') String releaseDate,
+    @JsonKey(name: 'title') String title,
     @JsonKey(name: 'video') bool video,
     @JsonKey(name: 'vote_average') double voteAverage,
-  ) = _KnownForModel;
+    @JsonKey(name: 'vote_count') int voteCount,
+  ) = KnownForMovieModel;
 
   factory KnownForModel.fromJson(Map<String, dynamic> json) =>
       _$KnownForModelFromJson(json);
 
   KnownFor toDomain() {
-    return KnownFor(
-      posterPath: posterPath,
-      adult: adult,
-      overview: overview,
-      releaseDate: releaseDate,
-      originalTitle: originalTitle,
-      genreIds: genreIds,
-      id: id,
-      mediaType: mediaType,
-      originalLanguage: originalLanguage,
-      title: title,
-      backdropPath: backdropPath,
-      popularity: popularity,
-      voteCount: voteCount,
-      video: video,
-      voteAverage: voteAverage,
+    return map(
+      knownForTvModel: (model) {
+        return KnownFor.knownForTv(
+          backdropPath: model.backdropPath,
+          firstAirDate: model.firstAirDate,
+          genreIds: model.genreIds,
+          id: model.id,
+          name: model.name,
+          originCountry: model.originCountry,
+          originalLanguage: model.originalLanguage,
+          originalName: model.originalName,
+          overview: model.overview,
+          posterPath: model.posterPath,
+          voteAverage: model.voteAverage,
+          voteCount: model.voteCount,
+        );
+      },
+      knownForMovieModel: (model) {
+        return KnownFor.knownForMovie(
+          adult: model.adult,
+          backdropPath: model.backdropPath,
+          genreIds: model.genreIds,
+          id: model.id,
+          originalLanguage: model.originalLanguage,
+          originalTitle: model.originalTitle,
+          overview: model.overview,
+          posterPath: model.posterPath,
+          releaseDate: model.releaseDate,
+          title: model.title,
+          video: model.video,
+          voteAverage: model.voteAverage,
+          voteCount: model.voteCount,
+        );
+      },
     );
   }
 }

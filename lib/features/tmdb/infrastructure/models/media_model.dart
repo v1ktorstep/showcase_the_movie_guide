@@ -8,7 +8,7 @@ part 'media_model.freezed.dart';
 
 part 'media_model.g.dart';
 
-@freezed
+@Freezed(unionKey: 'media_type', unionValueCase: FreezedUnionCase.snake)
 class MediaModel with _$MediaModel {
   const MediaModel._();
 
@@ -49,7 +49,6 @@ class MediaModel with _$MediaModel {
     @JsonKey(name: 'profile_path') String? profilePath,
     @JsonKey(name: 'adult') bool adult,
     @JsonKey(name: 'id') int id,
-    @JsonKey(name: 'media_type') String mediaType,
     @JsonKey(name: 'known_for') List<KnownForModel> knownFor,
     @JsonKey(name: 'name') String name,
     @JsonKey(name: 'popularity') double popularity,
@@ -100,7 +99,6 @@ class MediaModel with _$MediaModel {
           profilePath: model.profilePath,
           adult: model.adult,
           id: model.id,
-          mediaType: model.mediaType,
           knownFor: model.knownFor.mapAsList((e) => e.toDomain()),
           name: model.name,
           popularity: model.popularity,
