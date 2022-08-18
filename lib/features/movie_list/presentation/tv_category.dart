@@ -55,7 +55,7 @@ class _TvCategoryState extends State<TvCategory> {
           child: Text(localizations.mediaCategories(widget.itemSource.key)),
         ),
         SizedBox(
-          height: 250,
+          height: 220,
           child: PagedListView<int, Tv>.separated(
             pagingController: _pagingController,
             scrollDirection: Axis.horizontal,
@@ -66,9 +66,12 @@ class _TvCategoryState extends State<TvCategory> {
                   onTap: () {
                     context.router.push(MovieDetailsRoute(media: item));
                   },
-                  child: MovieItem(
-                    posterUrl: item.posterPath ?? '',
-                    title: item.originalName,
+                  child: SizedBox(
+                    width: 124,
+                    child: MovieItem(
+                      posterUrl: item.posterPath ?? '',
+                      title: item.originalName,
+                    ),
                   ),
                 );
               },

@@ -11,19 +11,18 @@ class MovieItem extends StatelessWidget {
     required this.title,
   }) : super(key: key);
 
-  final _posterSize = const Size(120, 120 * 1.5);
-
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CachedNetworkImage(
-          imageUrl: posterUrl,
-          fit: BoxFit.cover,
-          width: _posterSize.width,
-          height: _posterSize.height,
+        AspectRatio(
+          aspectRatio: 2 / 3,
+          child: CachedNetworkImage(
+            imageUrl: posterUrl,
+            fit: BoxFit.cover,
+          ),
         ),
         SizedBox(
           width: 100,
