@@ -13,6 +13,7 @@ class MainPage extends StatelessWidget {
     return AutoTabsRouter(
       routes: const [
         MovieListRoute(),
+        SearchRoute(),
       ],
       builder: (context, child, animation) {
         final tabsRouter = AutoTabsRouter.of(context);

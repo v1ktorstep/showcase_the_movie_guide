@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_details.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/movie_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/search_page.dart';
@@ -83,8 +84,11 @@ class TmdbRepository implements ITmdbRepository {
 
   @override
   Future<SearchPage> search(String query, {int page = 1}) {
-    return _searchService
-        .multiSearch(query: query, page: page)
-        .then((value) => value.toDomain());
+    return _searchService.multiSearch(query: query, page: page).then(
+      (value) {
+        return value.toDomain()
+          ..results.removeWhere((element) => element is Person);
+      },
+    );
   }
 }

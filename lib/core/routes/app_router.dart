@@ -6,6 +6,8 @@ import 'package:showcase_the_movie_guide/features/auth/presentation/sign_in_page
 import 'package:showcase_the_movie_guide/features/main/presentation/main_page.dart';
 import 'package:showcase_the_movie_guide/features/movie_details/presentation/movie_details_page.dart';
 import 'package:showcase_the_movie_guide/features/movie_list/presentation/movie_list_page.dart';
+import 'package:showcase_the_movie_guide/features/search/presentation/search_page.dart';
+import 'package:showcase_the_movie_guide/features/search/presentation/search_result_page.dart';
 import 'package:showcase_the_movie_guide/features/tmdb/domain/entities/media.dart';
 
 part 'app_router.gr.dart';
@@ -18,8 +20,10 @@ part 'app_router.gr.dart';
       initial: true,
       children: [
         AutoRoute(page: MovieListPage),
+        AutoRoute(page: SearchPage),
       ],
     ),
+    AutoRoute(page: SearchResultPage),
     AutoRoute(page: SignInPage),
     AutoRoute<AuthorizationStatus>(page: AuthorizationPage),
     AutoRoute(page: MovieDetailsPage),
